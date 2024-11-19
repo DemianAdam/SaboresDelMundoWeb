@@ -9,13 +9,13 @@ function App() {
   return (
     <>
       <div>
-        <a href="#">
+        <a href="https://www.instagram.com/saboresdelmundo.arg/">
           <img src={sdmLogo} className="logo" alt="React logo" />
         </a>
       </div>
       <h1>Proximamente...</h1>
       <p className="follow-on-instagram">
-        <a  href="https://www.instagram.com/saboresdelmundo.arg/">Seguinos en Instagram</a>
+        <a className="follow-on-instagram" href="https://www.instagram.com/saboresdelmundo.arg/">Seguinos en Instagram</a>
       </p>
     </>
   )
