@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -9,12 +8,15 @@
   height: 20em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 300ms, transform 0.2s ease;
 }
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+  cursor:pointer;
 }
+
+
 
 @keyframes logo-spin {
   from {
@@ -25,13 +27,24 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(1) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+
 
 
 .follow-on-instagram {
   color: #888;
+}
+
+@media (max-width: 1250px) {
+  .logo {
+    height: 14em;
+  }
+
+  h1{
+    font-size: 2.5em;
+  }
+}
+
+.logo:active{
+  animation: none;
+  transform: scale(0.8);
 }
