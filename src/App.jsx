@@ -1,34 +1,24 @@
-import { useState } from 'react'
-import sdmLogo from './assets/sdmLogo.png'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import Proximamente from './components/Proximamente/Proximamente'
+import Login from './components/Login/Login'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 
 function App() {
-  const [count, setCount] = useState(-4)
-
-  const handleClick = () => {
-    setCount(count + 1)
-  }
-
-
 
   return (
-    <>
-      <div>
-        <img src={sdmLogo} className="logo" alt="React logo" onClick={handleClick} onDragStart={(e) => e.preventDefault()} />
-      </div>
-      {
-        count < 0 ?
-          (<h1>Proximamente{ ".".repeat( Math.abs(count+1))}</h1>)
-          :
-          (<h1>{count}</h1>)
-      }
-
-      <p className="follow-on-instagram">
-        <a className="follow-on-instagram" href="https://www.instagram.com/saboresdelmundo.arg/">Seguinos en Instagram</a>
-      </p>
-    </>
+    <div className='text-center bg-cgray text-white flex flex-col items-center justify-center h-screen gap-5'>
+      <Routes>
+        <Route path="/" element={<Proximamente />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <h1>Admin</h1>
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </div>
   )
 }
 
