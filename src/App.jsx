@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Proximamente from './components/Proximamente/Proximamente'
 import Login from './components/Login/Login'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import Admin from './components/Admin/Admin'
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={
           <ProtectedRoute>
-            <h1>Admin</h1>
+            <Admin />
           </ProtectedRoute>
         } />
       </Routes>

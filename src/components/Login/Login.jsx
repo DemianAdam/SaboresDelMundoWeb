@@ -21,8 +21,6 @@ export default function Login() {
     axiosInstance.post(api, JSON.stringify(requestObj))
       .then(res => {
         const token = res.data.data.authToken;
-        console.log(token);
-
         localStorage.setItem('token', token)
         navigate('/admin')
       })

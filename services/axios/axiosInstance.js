@@ -10,7 +10,6 @@ axiosInstance.interceptors.response.use(
             axiosError.name = response.data.reason;
             return Promise.reject(axiosError);
         }
-        console.log(response);
         
         return response;
     },
