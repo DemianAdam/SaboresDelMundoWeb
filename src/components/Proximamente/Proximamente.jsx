@@ -1,8 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import sdmLogo from '../../assets/sdmLogo.png'
-
-
+import sdmLogo from '/sdmLogo.png'
 
 export default function Proximamente() {
     const [count, setCount] = useState(-4)
