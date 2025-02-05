@@ -3,14 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSackXmark, faXmark, faBars } from '@fortawesome/free-solid-svg-icons'
 import SideButton from '../Common/SideButton'
 import ModulesConfig from './modulesConfig'
-import { Link, Route, Routes } from 'react-router-dom'
+import { useNavigate, Route, Routes } from 'react-router-dom'
 import sdmLogo from '/sdmLogo.png'
 
 
 
 export default function Admin() {
+  const navigate = useNavigate()
   const sidebarRef = useRef(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [headingText, setHeadingText] = useState('Admin')
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -25,6 +27,15 @@ export default function Admin() {
     }
   }, [sidebarRef])
 
+  const handleNavigation = (e, route, title) => {
+    e.preventDefault()
+    setHeadingText(title)
+    setSidebarOpen(!sidebarOpen)
+
+    navigate(`/admin/${route}`)
+  }
+
+
   const testFunction = () => {
     console.log(sidebarRef);
   }
@@ -38,28 +49,29 @@ export default function Admin() {
           fixed  inset-y-0 left-0 transform bg-neutral-800 px-5 transition-transform duration-300 ease-in-out z-50
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
-        <Link to='/admin' className='text-white'>
-          <div className='flex  items-center'>
+        <div className='text-white cursor-pointer' onClick={(e) => { handleNavigation(e, '/admin', 'Admin') }}>
+          <div className='flex items-center mt-5 mb-10 border-b border-neutral-700 pb-2'>
             <img src={sdmLogo} alt='Logo de Sabores Del Mundo' className=' h-20  object-cover' />
             <p className='text-xl font-bold px-3'>Sabores del Mundo</p>
-            <FontAwesomeIcon icon={faXmark} onClick={() => setSidebarOpen(!sidebarOpen)} />
+            <FontAwesomeIcon icon={faXmark} />
           </div>
-        </Link>
+        </div>
         <ul className='text-start'>
           {ModulesConfig.map((module) => (
-            <li key={module.key}>
-              <Link to={module.route} className='text-white'>
+            <li key={module.key} className='cursor-pointer'>
+              <div className='text-white' onClick={(e) => { handleNavigation(e, module.route, module.title) }}>
                 <SideButton title={module.title} icon={module.icon} />
-              </Link>
+              </div>
             </li>
           ))}
         </ul>
       </div>
-      <div id='main' className='w-full justify-evenly'>
-        <div className='bg-neutral-800 p-4 flex'>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className='text-white cursor-pointer'>
-            <FontAwesomeIcon icon={faBars} className='w-5 p-1 bg-zinc-700 rounded hover:bg-zinc-600'/>
+      <div id='main' className='w-full'>
+        <div className='bg-neutral-800 p-9 flex relative h-16'>
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className='text-white cursor-pointer inline-flex items-center p-0'>
+            <FontAwesomeIcon icon={faBars} className='w-5 p-3 bg-zinc-700 rounded hover:bg-zinc-600' />
           </button>
+          <h1 className='text-white text-4xl font-bold self-center absolute left-1/2 transform -translate-x-1/2'>{headingText}</h1>
         </div>
         <Routes>
           {ModulesConfig.map((module) => (
