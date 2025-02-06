@@ -7,7 +7,7 @@ export default function ProductModule() {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+        const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
 
         axiosInstance.get(api, {
             params: {
@@ -26,7 +26,7 @@ export default function ProductModule() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+        const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
         const product = {
             name: e.target.name.value,
             price: e.target.price.value
@@ -55,7 +55,7 @@ export default function ProductModule() {
     }
 
     const handleRemove = (id) => {
-        const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+        const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
         const requestObj = {
             endpoint: '/product/remove',
             data: {
@@ -122,7 +122,7 @@ export default function ProductModule() {
                         </thead>
                         <tbody>
                             {
-                                products.map((product, index) => (
+                                products && products.map((product, index) => (
                                     <tr key={product.id} className='border-b border-neutral-500'>
                                         <td>{index + 1}</td>
                                         <td>{product.name}</td>

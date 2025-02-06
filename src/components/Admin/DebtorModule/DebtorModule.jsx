@@ -7,7 +7,7 @@ export default function DebtorModule() {
   const [debtors, setDebtors] = useState([])
   const [loading, setLoading] = useState(true)
   useEffect(() => {
-    const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+    const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
 
     axiosInstance.get(api, {
       params: {
@@ -26,7 +26,7 @@ export default function DebtorModule() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+    const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
     const debtor = {
       name: e.target.name.value,
     }
@@ -54,7 +54,7 @@ export default function DebtorModule() {
   }
 
   const handleRemove = (id) => {
-    const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+    const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
     const requestObj = {
       endpoint: '/debtor/remove',
       data: {

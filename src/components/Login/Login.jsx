@@ -7,7 +7,7 @@ export default function Login() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault()
-    const api = "https://script.google.com/macros/s/AKfycbwcefyH1SIvGYUOK2a0akLYgOP5XugLo4mWMpD3m9TMdu1a33dhsI42TfLImxqLYEwG/exec";
+    const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
     const user = {
       username: e.target.username.value,
       password: e.target.password.value
@@ -20,7 +20,7 @@ export default function Login() {
     }
     axiosInstance.post(api, JSON.stringify(requestObj))
       .then(res => {
-        const token = res.data.data.authToken;
+        const token = res.data.authToken;
         localStorage.setItem('token', token)
         navigate('/admin')
       })
