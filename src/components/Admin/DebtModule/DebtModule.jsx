@@ -10,10 +10,6 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
-
-
-
     useEffect(() => {
         setHeadingText('Deudas')
         const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
