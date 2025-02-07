@@ -5,6 +5,7 @@ import SideButton from '../Common/SideButton'
 import ModulesConfig from './modulesConfig'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import sdmLogo from '/sdmLogo.png'
+import Modal from '../Common/Modal/Modal'
 
 
 
@@ -13,6 +14,8 @@ export default function Admin() {
   const sidebarRef = useRef(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [headingText, setHeadingText] = useState('Admin')
+  const [showModal, setShowModal] = useState(false)
+  const [modalContent, setModalContent] = useState({})
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -33,8 +36,9 @@ export default function Admin() {
     if (route) {
       navigate(`/admin/${route}`)
     }
-    else{
+    else {
       navigate('/admin')
+      setHeadingText('Admin')
     }
   }
 
@@ -79,9 +83,10 @@ export default function Admin() {
         <div id='main-content'>
           <Routes>
             {ModulesConfig.map((module) => (
-              <Route key={module.key} path={module.route} element={<module.component setHeadingText={setHeadingText}/>} />
+              <Route key={module.key} path={module.route} element={<module.component setHeadingText={setHeadingText} setShowModal={setShowModal} setModalContent={setModalContent} />} />
             ))}
           </Routes>
+          <Modal show={showModal} onHide={() => setShowModal(false)} content={modalContent}></Modal>
         </div>
       </div>
     </div>
