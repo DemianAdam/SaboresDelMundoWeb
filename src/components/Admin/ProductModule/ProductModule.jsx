@@ -3,10 +3,12 @@ import CardModule from '../CardModule'
 import axiosInstance from '../../../../services/axios/axiosInstance';
 import { useEffect, useState } from 'react';
 
-export default function ProductModule() {
+export default function ProductModule({ setHeadingText }) {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
+        setHeadingText('Productos');
         const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
 
         axiosInstance.get(api, {

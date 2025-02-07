@@ -27,9 +27,8 @@ export default function Admin() {
     }
   }, [sidebarRef])
 
-  const handleNavigation = (e, route, title) => {
+  const handleNavigation = (e, route) => {
     e.preventDefault()
-    setHeadingText(title)
     setSidebarOpen(!sidebarOpen)
     if (route) {
       navigate(`/admin/${route}`)
@@ -80,7 +79,7 @@ export default function Admin() {
         <div id='main-content'>
           <Routes>
             {ModulesConfig.map((module) => (
-              <Route key={module.key} path={module.route} element={<module.component />} />
+              <Route key={module.key} path={module.route} element={<module.component setHeadingText={setHeadingText}/>} />
             ))}
           </Routes>
         </div>

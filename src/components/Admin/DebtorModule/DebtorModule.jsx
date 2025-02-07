@@ -3,10 +3,12 @@ import CardModule from '../CardModule'
 import axiosInstance from '../../../../services/axios/axiosInstance';
 import { useEffect, useState } from 'react';
 
-export default function DebtorModule() {
+export default function DebtorModule({ setHeadingText }) {
   const [debtors, setDebtors] = useState([])
   const [loading, setLoading] = useState(true)
+  
   useEffect(() => {
+    setHeadingText('Deudores')
     const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
 
     axiosInstance.get(api, {
