@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function DebtorModule({ setHeadingText }) {
   const [debtors, setDebtors] = useState([])
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
     setHeadingText('Deudores')
     const api = "https://script.google.com/macros/s/AKfycbz4e_XHxEDIQ7b0GHO3TrPsnnl1GMtRfVjvuvsaX6Ot-EMtWbuC1FTQRTXXFYUFCUtM/exec";
@@ -80,7 +80,7 @@ export default function DebtorModule({ setHeadingText }) {
 
 
   return (
-    <div className='flex flex-col items-center'>
+    <>
       <CardModule >
         <h2 className="text-2xl text-center pb-2 mb-3 border-b border-neutral-500">Añadir Deudor</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 items-center">
@@ -101,37 +101,39 @@ export default function DebtorModule({ setHeadingText }) {
           </div>
         </form>
       </CardModule>
-      {
-        loading ? <h1>CARGANDO</h1> : <CardModule className={'w-4/6'}>
-          <table className='table-auto w-full'>
-            <thead className='border-b border-neutral-500'>
-              <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                debtors.map((debtor, index) => (
-                  <tr key={debtor.id} className='border-b border-neutral-500'>
-                    <td>{index + 1}</td>
-                    <td>{debtor.name}</td>
-                    <td>
-                      <button className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'>Editar</button>
-                    </td>
-                    <td>
-                      <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors' onClick={() => handleRemove(debtor.id)} >Eliminar</button>
-                    </td>
+      <div className='flex justify-center'>
+        {
+          loading ? <h1>CARGANDO</h1> :
+            <CardModule className={'overflow-x-auto w-4/8'}>
+              <table className='table-auto w-full'>
+                <thead className='border-b border-neutral-500'>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                   </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </CardModule>
-      }
-
-    </div>
+                </thead>
+                <tbody>
+                  {
+                    debtors.map((debtor, index) => (
+                      <tr key={debtor.id} className='border-b border-neutral-500'>
+                        <td className='p-3'>{index + 1}</td>
+                        <td className='p-3'>{debtor.name}</td>
+                        <td className='p-3'>
+                          <button className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'>Editar</button>
+                        </td>
+                        <td className='p-3'>
+                          <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors' onClick={() => handleRemove(debtor.id)} >Eliminar</button>
+                        </td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </CardModule>
+        }
+      </div>
+    </>
   )
 }

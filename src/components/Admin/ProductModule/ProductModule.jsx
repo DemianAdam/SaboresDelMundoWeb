@@ -81,68 +81,74 @@ export default function ProductModule({ setHeadingText }) {
 
 
     return (
-        <div className='flex flex-col items-center'>
-            <CardModule >
-                <h2 className="text-2xl text-center pb-2 mb-3 border-b border-neutral-500">Añadir Producto</h2>
-                <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 items-center">
-                    <label htmlFor="name" className="text-start text-xl">
-                        Nombre
-                    </label>
-                    <input
-                        type="text"
-                        id="name"
-                        className="border p-2 w-full"
-                    />
-                    <label htmlFor="price" className="text-start text-xl">
-                        Precio
-                    </label>
-                    <input
-                        type="number"
-                        id="price"
-                        className="border p-2 w-full"
-                    />
-                    <div className="col-span-2">
+        <>
+            <div className='flex justify-center'>
+                <CardModule >
+                    <h2 className="text-2xl text-center pb-2 mb-3 border-b border-neutral-500">Añadir Producto</h2>
+                    <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 items-center">
+                        <label htmlFor="name" className="text-start text-xl">
+                            Nombre
+                        </label>
                         <input
-                            type="submit"
-                            value="Añadir"
-                            className="w-full border p-2 bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                            type="text"
+                            id="name"
+                            className="border p-2 w-full"
                         />
-                    </div>
-                </form>
-            </CardModule>
-            {
-                loading ? <h1>CARGANDO</h1> : <CardModule className={'w-4/6'}>
-                    <table className='table-auto w-full'>
-                        <thead className='border-b border-neutral-500'>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                products && products.map((product, index) => (
-                                    <tr key={product.id} className='border-b border-neutral-500'>
-                                        <td>{index + 1}</td>
-                                        <td>{product.name}</td>
-                                        <td>{product.price}</td>
-                                        <td>
-                                            <button className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'>Editar</button>
-                                        </td>
-                                        <td>
-                                            <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors' onClick={() => handleRemove(product.id)} >Eliminar</button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                        <label htmlFor="price" className="text-start text-xl">
+                            Precio
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            className="border p-2 w-full"
+                        />
+                        <div className="col-span-2">
+                            <input
+                                type="submit"
+                                value="Añadir"
+                                className="w-full border p-2 bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                            />
+                        </div>
+                    </form>
                 </CardModule>
-            }
+            </div>
 
-        </div>
+            <div className='flex justify-center'>
+                {loading ? <h1>CARGANDO</h1> :
+                    <CardModule className={'overflow-x-auto w-4/8'}>
+                        <table className='table-auto w-full'>
+                            <thead className='border-b border-neutral-500'>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    products && products.map((product, index) => (
+                                        <tr key={product.id} className='border-b border-neutral-500'>
+                                            <td className='p-3'>{index + 1}</td>
+                                            <td className='p-3'>{product.name}</td>
+                                            <td className='p-3'>{product.price}</td>
+                                            <td className='p-3'>
+                                                <button className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'>Editar</button>
+                                            </td>
+                                            <td className='p-3'>
+                                                <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors' onClick={() => handleRemove(product.id)} >Eliminar</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </CardModule>
+                }
+            </div>
+
+
+        </>
     )
 }

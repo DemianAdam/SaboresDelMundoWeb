@@ -2,7 +2,7 @@ import React from 'react'
 import CardModule from '../CardModule'
 import axiosInstance from '../../../../services/axios/axiosInstance';
 import { useEffect, useState } from 'react';
-import './DebtModule.css'
+
 
 export default function DebtModule({ setHeadingText, setShowModal, setModalContent }) {
     const [debts, setDebts] = useState([]);
@@ -223,9 +223,9 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             </select>
             <label htmlFor="quantity">Cantidad</label>
             <input className="border p-2 w-full" type="number" id="quantity" min={1} />
-            <div>
-                <input type="submit" value="Editar" />
-                <button type='button' onClick={(e) => { e.preventDefault(); onHide() }}>Cancelar</button>
+            <div className='col-span-2 flex justify-around'>
+                <input type="submit" value="Editar" className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors' />
+                <button type='button' onClick={(e) => { e.preventDefault(); onHide() }} className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'>Cancelar</button>
             </div>
         </form>
 
@@ -257,65 +257,67 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
                     </form>
                 </CardModule>
             </div>
-            {loading ? <div>CARGANDO</div> :
-                <CardModule className={'overflow-x-auto'}>
-                    <table className='relative table-auto w-full '>
-                        <thead className='border-b border-neutral-500'> 
-                            <tr>
-                                <th>#</th>
-                                <th>Deudor</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Fecha</th>
-                                <th>Total</th>
-                                <th>Total Pagado</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
-                                <th>Pagar</th>
-                            </tr>
-                        </thead>
-                        <caption className='absolute border-b w-[94.5%] border-neutral-500'></caption>
-                        <tbody >
-                            {debts.map((debt, index) => (
-                                // Added border classes to each row for a horizontal line between rows
-                                <tr key={debt.id} className='border-b border-neutral-500' >
-                                    <td className='p-3'>{index + 1}</td>
-                                    <td className='p-3'>{debt.debtor.name}</td>
-                                    <td className='p-3'>{debt.product.name}</td>
-                                    <td className='p-3'>{debt.quantity}</td>
-                                    <td className='p-3'>{new Date(debt.date).toLocaleString()}</td>
-                                    <td className='p-3'>{debt.quantity * debt.product.price}</td>
-                                    <td className='p-3'>{debt.payedAmount}</td>
-                                    <td className='p-3'>
-                                        <button
-                                            className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'
-                                            onClick={() => showEditModal(debt)}
-                                        >
-                                            Editar
-                                        </button>
-                                    </td>
-                                    <td className='p-3'>
-                                        <button
-                                            className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'
-                                            onClick={() => handleRemove(debt.id)}
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </td>
-                                    <td className='p-3'>
-                                        <button
-                                            className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors'
-                                            onClick={() => showPaymentModal(debt)}
-                                        >
-                                            Pagar
-                                        </button>
-                                    </td>
+            <div className='flex justify-center'>
+                {loading ? <div>CARGANDO</div> :
+                    <CardModule className={'overflow-x-auto w-4/8'}>
+                        <table className=' table-auto w-full '>
+                            <thead className='border-b border-neutral-500'>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Deudor</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Total Pagado</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                    <th>Pagar</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </CardModule>
-            }
+                            </thead>
+
+                            <tbody >
+                                {debts.map((debt, index) => (
+                                    // Added border classes to each row for a horizontal line between rows
+                                    <tr key={debt.id} className='border-b border-neutral-500' >
+                                        <td className='p-3'>{index + 1}</td>
+                                        <td className='p-3'>{debt.debtor.name}</td>
+                                        <td className='p-3'>{debt.product.name}</td>
+                                        <td className='p-3'>{debt.quantity}</td>
+                                        <td className='p-3'>{new Date(debt.date).toLocaleString()}</td>
+                                        <td className='p-3'>{debt.quantity * debt.product.price}</td>
+                                        <td className='p-3'>{debt.payedAmount}</td>
+                                        <td className='p-3'>
+                                            <button
+                                                className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'
+                                                onClick={() => showEditModal(debt)}
+                                            >
+                                                Editar
+                                            </button>
+                                        </td>
+                                        <td className='p-3'>
+                                            <button
+                                                className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'
+                                                onClick={() => handleRemove(debt.id)}
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </td>
+                                        <td className='p-3'>
+                                            <button
+                                                className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors'
+                                                onClick={() => showPaymentModal(debt)}
+                                            >
+                                                Pagar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </CardModule>
+                }
+            </div>
         </>
     )
 }
