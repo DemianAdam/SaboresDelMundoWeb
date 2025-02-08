@@ -3,3 +3,11 @@
 @theme {
     --color-cgray: #242424;
 }
+
+html,
+body,
+#root{
+    background-color: #18181b; /* This is the equivalent of bg-zinc-900 */
+    height: 100%;
+    margin: 0;
+}

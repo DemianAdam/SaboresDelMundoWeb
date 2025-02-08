@@ -48,7 +48,7 @@ export default function Admin() {
   }
 
   return (
-    <div className='flex w-screen h-screen'>
+    <div className='flex w-full h-screen'>
       <div
         id='sidebar'
         ref={sidebarRef}
@@ -74,7 +74,7 @@ export default function Admin() {
         </ul>
       </div>
       <div id='main' className='w-full flex flex-col'>
-        <div id='header' className='bg-neutral-800 pl-9 flex relative h-16  '>
+        <div id='header' className='bg-neutral-800 pl-9 flex relative py-3  '>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className='text-white cursor-pointer inline-flex items-center p-0'>
             <FontAwesomeIcon icon={faBars} className='w-5 p-3 bg-zinc-700 rounded hover:bg-zinc-600' />
           </button>

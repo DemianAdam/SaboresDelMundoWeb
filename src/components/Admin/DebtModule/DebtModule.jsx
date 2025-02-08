@@ -2,7 +2,7 @@ import React from 'react'
 import CardModule from '../CardModule'
 import axiosInstance from '../../../../services/axios/axiosInstance';
 import { useEffect, useState } from 'react';
-
+import './DebtModule.css'
 
 export default function DebtModule({ setHeadingText, setShowModal, setModalContent }) {
     const [debts, setDebts] = useState([]);
@@ -22,7 +22,6 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             axiosInstance.get(api, {
                 params: {
                     endpoint: '/debtor/getAll',
-
                 }
             }),
             axiosInstance.get(api, {
@@ -64,9 +63,6 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             productName: productName
         }
         console.log(debt);
-
-
-
 
         const requestObj = {
             endpoint: '/debt/add',
@@ -135,7 +131,6 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
 
         console.log(debt);
 
-
         const requestObj = {
             endpoint: '/debt/update',
             data: {
@@ -156,7 +151,6 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             })
             .finally(() => {
                 setLoading(false)
-
             })
     }
 
@@ -194,14 +188,14 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
     }
 
     const debtPaymentForm = (onHide, debt) =>
-        <form onSubmit={(e) => handlePayment(e, debt)} className='grid gap-5  grid-cols-1 md:grid-cols-2 text-xl'>
-            <label className='flex justify-center items-center ' >Deudor</label>
+        <form onSubmit={(e) => handlePayment(e, debt)} className='grid gap-5 grid-cols-1 md:grid-cols-2 text-xl'>
+            <label className='flex justify-center items-center'>Deudor</label>
             <input className="border p-2 w-full" type="text" value={debt.debtor.name} disabled />
             <label>Producto</label>
             <input className="border p-2 w-full" type="text" value={debt.product.name} disabled />
-            <label >Cantidad</label>
+            <label>Cantidad</label>
             <input className="border p-2 w-full" type="number" value={debt.quantity} disabled />
-            <label >Total</label>
+            <label>Total</label>
             <input className="border p-2 w-full" type="number" value={debt.quantity * debt.product.price} disabled />
             <label htmlFor="amount">Cantidad a pagar</label>
             <input className="border p-2 w-full" type="number" id="amount" min={1} />
@@ -217,25 +211,22 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
         setShowModal(true)
     }
 
-
-
     const editDebtForm = (onHide, debtId) =>
-        <form onSubmit={(e) => handleUpdate(e, debtId)} className='grid gap-5  grid-cols-1 md:grid-cols-2 text-xl'>
-            <label className='flex justify-center items-center ' htmlFor="debtor">Deudor</label>
-            <select className="border p-2 w-full" name="" id="debtor">
+        <form onSubmit={(e) => handleUpdate(e, debtId)} className='grid gap-5 grid-cols-1 md:grid-cols-2 text-xl'>
+            <label className='flex justify-center items-center' htmlFor="debtor">Deudor</label>
+            <select className="border p-2 w-full" id="debtor">
                 {debtors.map(debtor => <option key={debtor.id} value={debtor.id}>{debtor.name}</option>)}
             </select>
             <label htmlFor="product">Producto</label>
-            <select className="border p-2 w-full" name="" id="product">
+            <select className="border p-2 w-full" id="product">
                 {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
             </select>
             <label htmlFor="quantity">Cantidad</label>
             <input className="border p-2 w-full" type="number" id="quantity" min={1} />
             <div>
                 <input type="submit" value="Editar" />
-                <button type='button' onClick={(e) => { e.preventDefault(); onHide() }}>asd</button>
+                <button type='button' onClick={(e) => { e.preventDefault(); onHide() }}>Cancelar</button>
             </div>
-
         </form>
 
     const showEditModal = (debt) => {
@@ -250,14 +241,14 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
         <>
             <div className='flex justify-center'>
                 <CardModule className={'w-1/2'}>
-                    <h2 className='text-2xl text-center pb-2 mb-3 border-b border-neutral-500"'>Agregar Deuda</h2>
-                    <form onSubmit={handleSubmit} className='grid gap-5  grid-cols-1 md:grid-cols-2 text-xl'>
-                        <label className='flex justify-center items-center ' htmlFor="debtor">Deudor</label>
-                        <select className="border p-2 w-full" name="" id="debtor">
+                    <h2 className='text-2xl text-center pb-2 mb-3 border-b border-neutral-500'>Agregar Deuda</h2>
+                    <form onSubmit={handleSubmit} className='grid gap-5 grid-cols-1 md:grid-cols-2 text-xl'>
+                        <label className='flex justify-center items-center' htmlFor="debtor">Deudor</label>
+                        <select className="border p-2 w-full" id="debtor">
                             {debtors.map(debtor => <option key={debtor.id} value={debtor.id}>{debtor.name}</option>)}
                         </select>
                         <label className='flex justify-center items-center' htmlFor="product">Producto</label>
-                        <select className="border p-2 w-full" name="" id="product">
+                        <select className="border p-2 w-full" id="product">
                             {products.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
                         </select>
                         <label className='flex justify-center items-center' htmlFor="quantity">Cantidad</label>
@@ -268,11 +259,10 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             </div>
             {loading ? <div>CARGANDO</div> :
                 <CardModule className={'overflow-x-auto'}>
-                    <table className='relative table-auto w-full border-separate border-spacing-x-4'>
-
-                        <thead >
-                            <tr >
-                                <th >#</th>
+                    <table className='relative table-auto w-full '>
+                        <thead className='border-b border-neutral-500'> 
+                            <tr>
+                                <th>#</th>
                                 <th>Deudor</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
@@ -284,34 +274,48 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
                                 <th>Pagar</th>
                             </tr>
                         </thead>
-                        <caption className='absolute border-b w-[94.5%]  border-neutral-500'>   </caption>
-                        <tbody>
+                        <caption className='absolute border-b w-[94.5%] border-neutral-500'></caption>
+                        <tbody >
                             {debts.map((debt, index) => (
-                                <tr key={debt.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{debt.debtor.name}</td>
-                                    <td>{debt.product.name}</td>
-                                    <td>{debt.quantity}</td>
-                                    <td>{new Date(debt.date).toLocaleString()}</td>
-                                    <td>{debt.quantity * debt.product.price}</td>
-                                    <td>{debt.payedAmount}</td>
-                                    <td>
-                                        <button className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors' onClick={() => showEditModal(debt)} >Editar</button>
+                                // Added border classes to each row for a horizontal line between rows
+                                <tr key={debt.id} className='border-b border-neutral-500' >
+                                    <td className='p-3'>{index + 1}</td>
+                                    <td className='p-3'>{debt.debtor.name}</td>
+                                    <td className='p-3'>{debt.product.name}</td>
+                                    <td className='p-3'>{debt.quantity}</td>
+                                    <td className='p-3'>{new Date(debt.date).toLocaleString()}</td>
+                                    <td className='p-3'>{debt.quantity * debt.product.price}</td>
+                                    <td className='p-3'>{debt.payedAmount}</td>
+                                    <td className='p-3'>
+                                        <button
+                                            className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'
+                                            onClick={() => showEditModal(debt)}
+                                        >
+                                            Editar
+                                        </button>
                                     </td>
-                                    <td>
-                                        <button className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors' onClick={() => handleRemove(debt.id)} >Eliminar</button>
+                                    <td className='p-3'>
+                                        <button
+                                            className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'
+                                            onClick={() => handleRemove(debt.id)}
+                                        >
+                                            Eliminar
+                                        </button>
                                     </td>
-                                    <td>
-                                        <button className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors' onClick={() => showPaymentModal(debt)} >Pagar</button>
+                                    <td className='p-3'>
+                                        <button
+                                            className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors'
+                                            onClick={() => showPaymentModal(debt)}
+                                        >
+                                            Pagar
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
-
                     </table>
                 </CardModule>
             }
-
         </>
     )
 }
