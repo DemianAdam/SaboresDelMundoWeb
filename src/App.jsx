@@ -10,9 +10,9 @@ import Admin from './components/Admin/Admin'
 function App() {
 
   return (
-    <div className='text-center bg-zinc-900 text-white flex flex-col items-center justify-center gap-5 h-full'>
+    <div className='text-center bg-zinc-900 text-white flex flex-col items-center justify-center gap-5 h-screen'>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Proximamente />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin/*" element={
           <ProtectedRoute>
