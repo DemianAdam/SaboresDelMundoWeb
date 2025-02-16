@@ -104,7 +104,7 @@ export default function DebtorModule({ setHeadingText }) {
       <div className='flex justify-center'>
         {
           loading ? <h1>CARGANDO</h1> :
-            <CardModule className={'overflow-x-auto w-4/8'}>
+            <CardModule className={'overflow-x-auto md:w-4/8'}>
               <table className='table-auto w-full'>
                 <thead className='border-b border-neutral-500'>
                   <tr>

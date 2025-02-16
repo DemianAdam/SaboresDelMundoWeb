@@ -74,11 +74,16 @@ export default function Admin() {
         </ul>
       </div>
       <div id='main' className='w-full flex flex-col'>
-        <div id='header' className='bg-neutral-800 pl-9 flex relative py-3  '>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className='text-white cursor-pointer inline-flex items-center p-0'>
+        <div id='header' className='bg-neutral-800 pl-6 flex relative py-3 justify-between items-center'>
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className='text-white cursor-pointer inline-flex p-0'>
             <FontAwesomeIcon icon={faBars} className='w-5 p-3 bg-zinc-700 rounded hover:bg-zinc-600' />
           </button>
-          <h1 className='text-white text-4xl font-bold self-center absolute left-1/2 transform -translate-x-1/2'>{headingText}</h1>
+          <h1 className='text-white text-4xl font-bold self-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2'>{headingText}</h1>
+          <div className='mr-5'>
+            <button onClick={() => localStorage.removeItem("token")} className='text-white cursor-pointer inline-flex p-2 bg-zinc-700 rounded hover:bg-zinc-600'>
+              Cerrar Sesion
+            </button>
+          </div>
         </div>
         <div id='main-content'>
           <Routes>

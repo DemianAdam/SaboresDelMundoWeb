@@ -6,8 +6,11 @@
 
 html,
 body,
-#root{
-    background-color: #18181b; /* This is the equivalent of bg-zinc-900 */
-
+#root {
+    background-color: var(--color-zinc-900);
     margin: 0;
+}
+
+option {
+    background-color: var(--color-zinc-900);
 }

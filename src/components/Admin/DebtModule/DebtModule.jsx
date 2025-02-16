@@ -1,7 +1,7 @@
 import React from 'react'
 import CardModule from '../CardModule'
 import axiosInstance from '../../../../services/axios/axiosInstance';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 
 export default function DebtModule({ setHeadingText, setShowModal, setModalContent }) {
@@ -9,6 +9,11 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
     const [debtors, setDebtors] = useState([]);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [filters, setFilters] = useState({
+        name: '',
+        order: '1',
+        type: '1'
+    });
 
     useEffect(() => {
         setHeadingText('Deudas')
@@ -237,6 +242,52 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
         setShowModal(true)
     }
 
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters(prev => ({ ...prev, [name]: value }));
+    };
+
+    const filteredDebts = useMemo(() => {
+        let filtered = [...debts];
+
+        // Filter by debtor name
+        if (filters.name) {
+            filtered = filtered.filter(debt =>
+                debt.debtor.name.toLowerCase().includes(filters.name.toLowerCase())
+            );
+        }
+
+        // Filter by payment type
+        filtered = filtered.filter(debt => {
+            const total = debt.quantity * debt.product.price;
+            if (filters.type === "2") { // Fully paid
+                return debt.payedAmount >= total;
+            } else if (filters.type === "3") { // Partially paid
+                return debt.payedAmount > 0 && debt.payedAmount < total;
+            } else if (filters.type === "4") { // Not paid
+                return debt.payedAmount === 0 || debt.payedAmount === "";
+            }
+            return true; // "Todas"
+        });
+
+        // Sorting based on order filter
+        filtered.sort((a, b) => {
+            if (filters.order === "1") { // Fecha
+                return new Date(a.date) - new Date(b.date);
+            } else if (filters.order === "2") { // Producto
+                return a.product.name.localeCompare(b.product.name);
+            } else if (filters.order === "3") { // Deudor
+                return a.debtor.name.localeCompare(b.debtor.name);
+            } else if (filters.order === "4") { // Total
+                return (a.quantity * a.product.price) - (b.quantity * b.product.price);
+            } else if (filters.order === "5") { // Total Pagado
+                return b.payedAmount - a.payedAmount;
+            }
+            return 0;
+        });
+
+        return filtered;
+    }, [debts, filters]);
     return (
         <>
             <div className='flex justify-center'>
@@ -257,65 +308,108 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
                     </form>
                 </CardModule>
             </div>
-            <div className='flex justify-center'>
+            <div className='flex flex-col justify-center items-center'>
                 {loading ? <div>CARGANDO</div> :
-                    <CardModule className={'overflow-x-auto w-4/8'}>
-                        <table className=' table-auto w-full '>
-                            <thead className='border-b border-neutral-500'>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Deudor</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Total Pagado</th>
-                                    <th>Editar</th>
-                                    <th>Eliminar</th>
-                                    <th>Pagar</th>
-                                </tr>
-                            </thead>
-
-                            <tbody >
-                                {debts.map((debt, index) => (
-                                    // Added border classes to each row for a horizontal line between rows
-                                    <tr key={debt.id} className='border-b border-neutral-500' >
-                                        <td className='p-3'>{index + 1}</td>
-                                        <td className='p-3'>{debt.debtor.name}</td>
-                                        <td className='p-3'>{debt.product.name}</td>
-                                        <td className='p-3'>{debt.quantity}</td>
-                                        <td className='p-3'>{new Date(debt.date).toLocaleString()}</td>
-                                        <td className='p-3'>{debt.quantity * debt.product.price}</td>
-                                        <td className='p-3'>{debt.payedAmount}</td>
-                                        <td className='p-3'>
-                                            <button
-                                                className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'
-                                                onClick={() => showEditModal(debt)}
-                                            >
-                                                Editar
-                                            </button>
-                                        </td>
-                                        <td className='p-3'>
-                                            <button
-                                                className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'
-                                                onClick={() => handleRemove(debt.id)}
-                                            >
-                                                Eliminar
-                                            </button>
-                                        </td>
-                                        <td className='p-3'>
-                                            <button
-                                                className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors'
-                                                onClick={() => showPaymentModal(debt)}
-                                            >
-                                                Pagar
-                                            </button>
-                                        </td>
+                    <>
+                        <CardModule className={'flex w-9/10 flex-wrap gap-5 justify-center sm:justify-around items-center'}>
+                            <div className='flex flex-col '>
+                                <label>Buscar Nombre</label>
+                                <input
+                                    type="text"
+                                    className='border'
+                                    name="name"
+                                    onChange={handleFilterChange}
+                                    value={filters.name}
+                                />
+                            </div>
+                            <div className='flex flex-col'>
+                                <label>Ordenar por:</label>
+                                <select
+                                    className='border'
+                                    name="order"
+                                    onChange={handleFilterChange}
+                                    value={filters.order}
+                                >
+                                    <option value="1">Fecha</option>
+                                    <option value="2">Producto</option>
+                                    <option value="3">Deudor</option>
+                                    <option value="4">Total</option>
+                                    <option value="5">Total Pagado</option>
+                                </select>
+                            </div>
+                            <div className='flex flex-col'>
+                                <label>Tipo:</label>
+                                <select
+                                    className='border'
+                                    name="type"
+                                    onChange={handleFilterChange}
+                                    value={filters.type}
+                                >
+                                    <option value="1">Todas</option>
+                                    <option value="2">Pagadas</option>
+                                    <option value="3">Debidas</option>
+                                    <option value="4">Sin Pagar</option>
+                                </select>
+                            </div>
+                        </CardModule>
+                        <CardModule className={'overflow-x-auto w-9/10'}>
+                            <table className=' table-auto w-full '>
+                                <thead className='border-b border-neutral-500'>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Deudor</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Fecha</th>
+                                        <th>Total</th>
+                                        <th>Total Pagado</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
+                                        <th>Pagar</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </CardModule>
+                                </thead>
+
+                                <tbody >
+                                    {filteredDebts.map((debt, index) => (
+                                        // Added border classes to each row for a horizontal line between rows
+                                        <tr key={debt.id} className='border-b border-neutral-500' >
+                                            <td className='p-3'>{index + 1}</td>
+                                            <td className='p-3'>{debt.debtor.name}</td>
+                                            <td className='p-3'>{debt.product.name}</td>
+                                            <td className='p-3'>{debt.quantity}</td>
+                                            <td className='p-3'>{new Date(debt.date).toLocaleString()}</td>
+                                            <td className='p-3'>{debt.quantity * debt.product.price}</td>
+                                            <td className='p-3'>{debt.payedAmount}</td>
+                                            <td className='p-3'>
+                                                <button
+                                                    className='bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors'
+                                                    onClick={() => showEditModal(debt)}
+                                                >
+                                                    Editar
+                                                </button>
+                                            </td>
+                                            <td className='p-3'>
+                                                <button
+                                                    className='bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors'
+                                                    onClick={() => handleRemove(debt.id)}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </td>
+                                            <td className='p-3'>
+                                                <button
+                                                    className='bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors'
+                                                    onClick={() => showPaymentModal(debt)}
+                                                >
+                                                    Pagar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </CardModule>
+                    </>
                 }
             </div>
         </>
