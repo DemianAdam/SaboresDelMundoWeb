@@ -263,9 +263,9 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
             if (filters.type === "2") { // Fully paid
                 return debt.payedAmount >= total;
             } else if (filters.type === "3") { // Partially paid
-                return debt.payedAmount > 0 && debt.payedAmount < total;
+                return debt.payedAmount >= 0 && debt.payedAmount < total;
             } else if (filters.type === "4") { // Not paid
-                return debt.payedAmount === 0 || debt.payedAmount === "";
+                return debt.payedAmount === 0 ;
             }
             return true; // "Todas"
         });
@@ -291,7 +291,7 @@ export default function DebtModule({ setHeadingText, setShowModal, setModalConte
     return (
         <>
             <div className='flex justify-center'>
-                <CardModule className={'w-1/2'}>
+                <CardModule className={'w-9/10 md:w-1/2'}>
                     <h2 className='text-2xl text-center pb-2 mb-3 border-b border-neutral-500'>Agregar Deuda</h2>
                     <form onSubmit={handleSubmit} className='grid gap-5 grid-cols-1 md:grid-cols-2 text-xl'>
                         <label className='flex justify-center items-center' htmlFor="debtor">Deudor</label>
