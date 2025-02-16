@@ -80,7 +80,7 @@ export default function Admin() {
           </button>
           <h1 className='text-white text-4xl font-bold self-center md:absolute md:left-1/2 md:transform md:-translate-x-1/2'>{headingText}</h1>
           <div className='mr-5'>
-            <button onClick={() => localStorage.removeItem("token")} className='text-white cursor-pointer inline-flex p-2 bg-zinc-700 rounded hover:bg-zinc-600'>
+            <button onClick={() => {localStorage.removeItem("token"); navigate('/login')}} className='text-white cursor-pointer inline-flex p-2 bg-zinc-700 rounded hover:bg-zinc-600'>
               Cerrar Sesion
             </button>
           </div>
